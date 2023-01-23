@@ -43,6 +43,7 @@ Instead, let us proceed with the behavior of the VIP and the DUV that can be obs
 ## APB properties to observe
 Picking up from Part 1 [[1](https://github.com/mjhborja/apply_stimuli_propagation_apb_part_1_uvm)], we are aware of the 3-signal handshake between IDLE, SETUP and ACCESS states. 
 ![diagram_004 1-stimuli_apb_p2_state_diagram_write](https://user-images.githubusercontent.com/50364461/213971542-e7c9972a-67a2-4d07-ac89-8a5e53920276.png)
+\
 The base line state machine diagram comes from [[5](https://documentation-service.arm.com/static/60d5b505677cf7536a55c245?token=)]. Only the annotations are Martin's orginal contribution.
 
 To make the review systematic, it is highly recommended to tabulate the behavioral properties you will use to check the waveform.
@@ -66,21 +67,25 @@ Given the properties tabulated above, valid transitions for the 4 types of data 
 ### 1. Write with no wait cycles
 \
 ![diagram_004 2-stimuli_apb_p2_write_no_wait](https://user-images.githubusercontent.com/50364461/213971586-a7f5fc56-8ba5-4eee-8607-ebd75337271d.png)
+\
 The base line timing diagram comes from [[5](https://documentation-service.arm.com/static/60d5b505677cf7536a55c245?token=)]. Only the annotations are Martin's orginal contribution.
 
 ### 2. Write with wait cycles
 \
 ![diagram_004 3-stimuli_apb_p2_write_with_wait](https://user-images.githubusercontent.com/50364461/213971604-fe62eaee-9b07-4124-9a68-5c9cf2f752ce.png)
+\
 The base line timing diagram comes from [[5](https://documentation-service.arm.com/static/60d5b505677cf7536a55c245?token=)]. Only the annotations are Martin's orginal contribution.
 
 ### 3. Read with no wait cycles
 \
 ![diagram_004 4-stimuli_apb_p2_read_no_wait](https://user-images.githubusercontent.com/50364461/213971621-0f06011d-ca9b-4193-a1db-b9b04cc7a7e3.png)
+\
 The base line timing diagram comes from [[5](https://documentation-service.arm.com/static/60d5b505677cf7536a55c245?token=)]. Only the annotations are Martin's orginal contribution.
 
 ### 4. Read with wait cycles
 \
 ![diagram_004 5-stimuli_apb_p2_read_with_wait](https://user-images.githubusercontent.com/50364461/213971633-e1d2c5f6-640f-4a69-9b10-8f735beb776a.png)
+\
 The base line timing diagram comes from [[5](https://documentation-service.arm.com/static/60d5b505677cf7536a55c245?token=)]. Only the annotations are Martin's orginal contribution.
 
 Note that each property stated above will be ignored if PRESETn is asserted. The combinations are tabulated below. To make transitions easier to understand, let's adopt |-> and |=> to stand for same cycle and next cycle.
