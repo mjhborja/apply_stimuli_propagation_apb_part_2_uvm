@@ -29,11 +29,9 @@ Since UVM is a discrete event type of simulation, the unifying element in both f
 ![diagram_003 19-alteration_9_c](https://user-images.githubusercontent.com/50364461/213841020-d3c1cd8f-e5b2-4b42-982e-ce5895ee2b42.png)
 
 You will recognize that ".dut_slave" is the hierarchical instance name under "top" as shown in the diagram above. It reflects the design hierarchy in the top.sv file where "dut_slave" is the instance name of the design "apb_slave" from line 14 of top.sv file. And, this instance occurs within the "top" module as shown in line 9 of top.sv.
-
-![Screen Shot 2023-01-22 at 3 54 16 PM](https://user-images.githubusercontent.com/50364461/213964331-bb87e56e-fd8c-442f-b63b-bda4b5622e01.png)
+![diagram_004 7-stimuli_apb_p2_source_code](https://user-images.githubusercontent.com/50364461/213971484-2a49a645-b625-45ec-a106-6c11d768e0c6.png)
 
 Another comparison that you can perform is between the signals of the "dut_slave" instance in lines 15 through 23 and the signals on the waveform.
-
 ![diagram_003 21-alteration_10](https://user-images.githubusercontent.com/50364461/213964402-8bd6a6d6-77c0-4631-a7e6-45fd624c516b.png)
 
 Finally, you will want to check the connection of the DUV with the VIP test bench as discussed in [[7](https://github.com/mjhborja/hello_world_uvm)] under the "Connection between top and the UVM test bench", "UVM Build phase" and "UVM Connect phase" sections. There is a slight variation in terms of invoking the "run_test()" from "uvm_root" and the "set" method for the uvm_config_db. For the APB VIP, this is located in a program block in the pgm_test.sv file instead of the test bench top module directly.
@@ -44,7 +42,7 @@ Instead, let us proceed with the behavior of the VIP and the DUV that can be obs
 
 ## APB properties to observe
 Picking up from Part 1 [[1](https://github.com/mjhborja/apply_stimuli_propagation_apb_part_1_uvm)], we are aware of the 3-signal handshake between IDLE, SETUP and ACCESS states. 
-![diagram_004 1-stimuli_apb_p2_state_diagram_write](https://user-images.githubusercontent.com/50364461/213965102-a3758f92-0ee9-46d7-b936-f36e2a4f4c19.png)
+![diagram_004 1-stimuli_apb_p2_state_diagram_write](https://user-images.githubusercontent.com/50364461/213971542-e7c9972a-67a2-4d07-ac89-8a5e53920276.png)
 
 To make the review systematic, it is highly recommended to tabulate the behavioral properties you will use to check the waveform.
 
@@ -66,19 +64,19 @@ Given the properties tabulated above, valid transitions for the 4 types of data 
 
 ### 1. Write with no wait cycles
 \
-![diagram_004 2-stimuli_apb_p2_write_no_wait](https://user-images.githubusercontent.com/50364461/213965681-35543bae-5fd2-478b-9e65-31b27f964414.png)
+![diagram_004 2-stimuli_apb_p2_write_no_wait](https://user-images.githubusercontent.com/50364461/213971586-a7f5fc56-8ba5-4eee-8607-ebd75337271d.png)
 
 ### 2. Write with wait cycles
 \
-![diagram_004 3-stimuli_apb_p2_write_with_wait](https://user-images.githubusercontent.com/50364461/213964497-409db2b4-43f4-4a07-94b7-bc7ef6ff33e9.png)
+![diagram_004 3-stimuli_apb_p2_write_with_wait](https://user-images.githubusercontent.com/50364461/213971604-fe62eaee-9b07-4124-9a68-5c9cf2f752ce.png)
 
 ### 3. Read with no wait cycles
 \
-![diagram_004 4-stimuli_apb_p2_read_no_wait](https://user-images.githubusercontent.com/50364461/213964502-40095277-ac19-4fea-b313-7884efb043e4.png)
+![diagram_004 4-stimuli_apb_p2_read_no_wait](https://user-images.githubusercontent.com/50364461/213971621-0f06011d-ca9b-4193-a1db-b9b04cc7a7e3.png)
 
 ### 4. Read with wait cycles
 \
-![diagram_004 5-stimuli_apb_p2_read_with_wait](https://user-images.githubusercontent.com/50364461/213964505-150182ca-88aa-4bfc-b956-2b99e7f95702.png)
+![diagram_004 5-stimuli_apb_p2_read_with_wait](https://user-images.githubusercontent.com/50364461/213971633-e1d2c5f6-640f-4a69-9b10-8f735beb776a.png)
 
 Note that each property stated above will be ignored if PRESETn is asserted. The combinations are tabulated below. To make transitions easier to understand, let's adopt |-> and |=> to stand for same cycle and next cycle.
 
@@ -103,8 +101,7 @@ Note that each property stated above will be ignored if PRESETn is asserted. The
 |4\|->R1\|=>n*R5\|=>R6\|=>4|read with n-wait cycles from any non-idle data transfer|any non-idle data transfer|
 
 At this point, you already have a complete set of valid property combinations and transitions. And since the design complexity is quite low, with only 16, it is possible to do this manually for up to a few transactions. Here's the annotation of the waveform from Part 1 [[1](https://github.com/mjhborja/apply_stimuli_propagation_apb_part_1_uvm)].
-
-![diagram_004 6-stimuli_apb_p2_waveform](https://user-images.githubusercontent.com/50364461/213964438-656a39f4-7113-4c6f-b120-31a1776fad19.png)
+![diagram_004 6-stimuli_apb_p2_waveform](https://user-images.githubusercontent.com/50364461/213971667-5c2108fa-2cab-42b3-a91e-be75d0c341b9.png)
 
 And with the annotations in place, you may conclude that the VIP generates APB compliant stimuli within the scope of the transactions shown in the waveform.
 
