@@ -20,19 +20,25 @@ There are 9 common phases and 12 run-time phases included in the UVM specificati
 
 ![diagram_004 1-uvm_phases](https://www.chipverify.com/images/uvm/uvm-phases.png)
 \
-Diagram courtesy of [[6](https://www.chipverify.com/uvm/uvm-phases)]
+Figure 1. Visual representation of the UVM phases from ChipVerify [[6](https://www.chipverify.com/uvm/uvm-phases)].
 
 While the print outs in all phases may be reflected in a log file, only the activity of nets during run-time phases are included in the value change dump. 
 
 Since UVM is a discrete event type of simulation, the unifying element in both files are the timestamps. To map the events occuring on the waveform, you may match the design hierarchy from the "Get Signals to Display" dialog of the EPWave waveform viewer app with the instance name of the DUV in the top.sv source code. 
 
 ![diagram_003 19-alteration_9_c](https://user-images.githubusercontent.com/50364461/213841020-d3c1cd8f-e5b2-4b42-982e-ce5895ee2b42.png)
+\
+Figure 2. Screenshot of the "Get Signals to Display" dialog.
 
 You will recognize that ".dut_slave" is the hierarchical instance name under "top" as shown in the diagram above. It reflects the design hierarchy in the top.sv file where "dut_slave" is the instance name of the design "apb_slave" from line 14. And, this instance occurs within the "top" module as shown in line 9 of top.sv.
 ![diagram_004 7-stimuli_apb_p2_source_code](https://user-images.githubusercontent.com/50364461/213971484-2a49a645-b625-45ec-a106-6c11d768e0c6.png)
+\
+Figure 3. Screenshot of the top.sv file including the lines of code relevant to the design hierarchy comparison.
 
 Another comparison that you can perform is between the signals of the "dut_slave" instance in lines 15 through 23 and the signals on the waveform.
 ![diagram_003 21-alteration_10](https://user-images.githubusercontent.com/50364461/213964402-8bd6a6d6-77c0-4631-a7e6-45fd624c516b.png)
+\
+Figure 4. Screenshot of the simulation waveform. 
 
 Finally, you will want to check the connection of the DUV with the VIP test bench as discussed in [[7](https://github.com/mjhborja/hello_world_uvm)] under the "Connection between top and the UVM test bench", "UVM Build phase" and "UVM Connect phase" sections. There is a slight variation in terms of invoking the "run_test()" from "uvm_root" and the "set" method for the uvm_config_db. For the APB VIP, this is located in a program block in the pgm_test.sv file instead of the test bench top module directly.
 
@@ -44,7 +50,7 @@ Instead, let us proceed with the behavior of the VIP and the DUV that can be obs
 Picking up from Part 1 [[1](https://github.com/mjhborja/apply_stimuli_propagation_apb_part_1_uvm)], we are aware of the 3-signal handshake between IDLE, SETUP and ACCESS states. 
 ![diagram_004 1-stimuli_apb_p2_state_diagram_write](https://user-images.githubusercontent.com/50364461/213971542-e7c9972a-67a2-4d07-ac89-8a5e53920276.png)
 \
-The base line state machine diagram comes from [[5](https://documentation-service.arm.com/static/60d5b505677cf7536a55c245?token=)]. Only the annotations are Martin's orginal contribution.
+Figure 5. Inheriting the state machine diagram from [[5](https://documentation-service.arm.com/static/60d5b505677cf7536a55c245?token=)], I superimposed protocol behavior properties.
 
 To make the review systematic, it is highly recommended to tabulate the behavioral properties you will use to check the waveform.
 
@@ -68,25 +74,25 @@ Given the properties tabulated above, valid transitions for the 4 types of data 
 \
 ![diagram_004 2-stimuli_apb_p2_write_no_wait](https://user-images.githubusercontent.com/50364461/213971586-a7f5fc56-8ba5-4eee-8607-ebd75337271d.png)
 \
-The base line timing diagram comes from [[5](https://documentation-service.arm.com/static/60d5b505677cf7536a55c245?token=)]. Only the annotations are Martin's orginal contribution.
+Figure 6. Inheriting the timing diagram of a write transfer without wait cycles from [[5](https://documentation-service.arm.com/static/60d5b505677cf7536a55c245?token=)], I superimposed the property labels consistent with the signal behavior.
 
 ### 2. Write with wait cycles
 \
 ![diagram_004 3-stimuli_apb_p2_write_with_wait](https://user-images.githubusercontent.com/50364461/213971604-fe62eaee-9b07-4124-9a68-5c9cf2f752ce.png)
 \
-The base line timing diagram comes from [[5](https://documentation-service.arm.com/static/60d5b505677cf7536a55c245?token=)]. Only the annotations are Martin's orginal contribution.
+Figure 7. The write transfer with wait cycles version of Figure 6.
 
 ### 3. Read with no wait cycles
 \
 ![diagram_004 4-stimuli_apb_p2_read_no_wait](https://user-images.githubusercontent.com/50364461/213971621-0f06011d-ca9b-4193-a1db-b9b04cc7a7e3.png)
 \
-The base line timing diagram comes from [[5](https://documentation-service.arm.com/static/60d5b505677cf7536a55c245?token=)]. Only the annotations are Martin's orginal contribution.
+Figure 8. The read without wait cycles transfer.
 
 ### 4. Read with wait cycles
 \
 ![diagram_004 5-stimuli_apb_p2_read_with_wait](https://user-images.githubusercontent.com/50364461/213971633-e1d2c5f6-640f-4a69-9b10-8f735beb776a.png)
 \
-The base line timing diagram comes from [[5](https://documentation-service.arm.com/static/60d5b505677cf7536a55c245?token=)]. Only the annotations are Martin's orginal contribution.
+Figure 9. And lastly, the read without wait cycles transfer.
 
 Note that each property stated above will be ignored if PRESETn is asserted. The combinations are tabulated below. To make transitions easier to understand, let's adopt |-> and |=> to stand for same cycle and next cycle.
 
@@ -112,6 +118,8 @@ Note that each property stated above will be ignored if PRESETn is asserted. The
 
 At this point, you already have a complete set of valid property combinations and transitions. And since the design complexity is quite low, with only 16, it is possible to do this manually for up to a few transactions. Here's the annotation of the waveform from Part 1 [[1](https://github.com/mjhborja/apply_stimuli_propagation_apb_part_1_uvm)].
 ![diagram_004 6-stimuli_apb_p2_waveform](https://user-images.githubusercontent.com/50364461/213971667-5c2108fa-2cab-42b3-a91e-be75d0c341b9.png)
+\
+Figure 10. The simulation waveform in a larger format, which made manually inserting labels easier. 
 
 And with the annotations in place, you may conclude that the VIP generates APB compliant stimuli within the scope of the transactions shown in the waveform.
 
