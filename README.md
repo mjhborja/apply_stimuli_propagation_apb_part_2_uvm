@@ -28,7 +28,7 @@ Since UVM is a discrete event type of simulation, the unifying element in both f
 
 ![diagram_003 19-alteration_9_c](https://user-images.githubusercontent.com/50364461/213841020-d3c1cd8f-e5b2-4b42-982e-ce5895ee2b42.png)
 
-You will recognize that ".dut_slave" is the hierarchical instance name under "top" as shown in the diagram above. It reflects the design hierarchy in the top.sv file where "dut_slave" is the instance name of the design "apb_slave" from line 14 of top.sv file. And, this instance occurs within the "top" module as shown in line 9 of top.sv.
+You will recognize that ".dut_slave" is the hierarchical instance name under "top" as shown in the diagram above. It reflects the design hierarchy in the top.sv file where "dut_slave" is the instance name of the design "apb_slave" from line 14. And, this instance occurs within the "top" module as shown in line 9 of top.sv.
 ![diagram_004 7-stimuli_apb_p2_source_code](https://user-images.githubusercontent.com/50364461/213971484-2a49a645-b625-45ec-a106-6c11d768e0c6.png)
 
 Another comparison that you can perform is between the signals of the "dut_slave" instance in lines 15 through 23 and the signals on the waveform.
@@ -85,7 +85,7 @@ Note that each property stated above will be ignored if PRESETn is asserted. The
 |0|idle|idle|
 |0\|=>W1\|=>W2\|=>3|write no wait from idle|idle|
 |0\|=>W1\|=>W2\|=>4|write no wait from idle|any non-idle data transfer|
-|0\|=>W1\|=>n*W5\|=>\|W6\|=>3|write with n-wait cycles from idle|idle|
+|0\|=>W1\|=>n*W5\|=>W6\|=>3|write with n-wait cycles from idle|idle|
 |0\|=>W1\|=>n*W5\|=>W6\|=>4|write with n-wait cycles from idle|any non-idle data transfer|
 |0\|=>R1\|=>R2\|=>3|write no wait from idle|idle|
 |0\|=>R1\|=>R2\|=>4|write no wait from idle|any non-idle data transfer|
