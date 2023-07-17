@@ -148,4 +148,4 @@ __*uvm phase mapping to simulation outputs*__, __*behavioral property derivation
 [8] C. Cummings and A. Salz, “SystemVerilog Event Regions, Race Avoidance & Guidelines,” Synopsys User Group (SNUG), Sep. 2006. Accessed: Jan. 22, 2023. [Online]. Available: http://www.sunburst-design.com/papers/CummingsSNUG2006Boston_SystemVerilog_Events.pdf
 
 ## Note to reader
-The review content, including references to the original source code, analysis, diagrams, annotations otherwise stated and overall presentation of the topic, is Martin's original contribution. The base line source code referenced from EDA Playground. The base line ARM timing diagrams that Martin annotated in Figure 5 through 9 are property of ARM.
+The review content, including references to the original source code, analysis, diagrams otherwise stated and overall presentation of the topic, is Martin's original contribution. The base line source codes are referenced from respective EDA Playground authors in earlier posts [[1](https://github.com/mjhborja/apply_stimuli_propagation_apb_part_1_uvm)]. The base line ARM timing diagrams that Martin annotated in Figures 5 through 9 are properties of ARM.
